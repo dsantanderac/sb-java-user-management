@@ -16,12 +16,12 @@ import com.duoc.week3.model.User.Role;
 public class UserRepository {
     private final List<User> users = new ArrayList<>();
 
-    // Return all users
+    // Retrieve all users
     public List<User> getAllUsers() {
         return users;
     }
 
-    // Return an user by id
+    // Retrieve an user by id
     public User getUserById(int id) {
         for (User user : users) {
             if (user.getUserId() == id) {
