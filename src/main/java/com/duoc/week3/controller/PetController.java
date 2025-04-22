@@ -10,7 +10,6 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RequestMapping("/api/pets")
 @RestController
@@ -24,11 +23,11 @@ public class PetController {
 
     @GetMapping
     public List<Pet> getAllPets() {
-        return petService.getAllPets();
+        return petService.getAll();
     }
 
     @GetMapping("/{id}")
     public Pet getPetById(@PathVariable int id) {
-        return petService.getPetById(id);
+        return petService.getById(id);
     }
 }

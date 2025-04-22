@@ -5,21 +5,24 @@ import org.springframework.stereotype.Service;
 import com.duoc.week3.model.User;
 import com.duoc.week3.repository.UserRepository;
 
+import lombok.RequiredArgsConstructor;
+
 // Service layer to manage business logic
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    private final UserRepository userRepository = new UserRepository();
+    private final UserRepository userRepository;
 
     // Override get all users method with the business logic
     @Override
-    public List<User> getAllUsers() {
-        return userRepository.getAllUsers();
+    public List<User> getAll() {
+        return userRepository.findAll();
     }
 
     // Override get user by id method with the business logic
     @Override
-    public User getUserById(int id) {
-        return userRepository.getUserById(id);
+    public User getById(int id) {
+        return userRepository.findById(id);
     }
 
 }

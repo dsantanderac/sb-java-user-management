@@ -5,7 +5,7 @@ import java.util.List;
 import com.duoc.week3.model.Pet;
 
 public interface PetService {
-    List<Pet> getAllPets();
+    List<Pet> getAll();
 
-    Pet getPetById(int id);
+    Pet getById(int id);
 }

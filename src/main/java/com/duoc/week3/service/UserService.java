@@ -5,7 +5,7 @@ import com.duoc.week3.model.User;
 
 // Service layer for User
 public interface UserService {
-    List<User> getAllUsers();
+    List<User> getAll();
 
-    User getUserById(int id);
+    User getById(int id);
 }

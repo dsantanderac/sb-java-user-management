@@ -1,56 +1,61 @@
 package com.duoc.week3.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+
+@Entity
+@Table(name = "pets")
 public class Pet {
-    private int id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sq_pet_id")
+    @SequenceGenerator(name = "sq_pet_id", sequenceName = "sq_pet_id", allocationSize = 1)
+    private Long id;
+
+    @NotNull(message = "Name cannot be null")
+    @Size(min = 2, max = 30, message = "Name must be between 2 and 30 characters")
     private String name;
+
+    @NotNull(message = "Type cannot be null")
+    @Size(min = 2, max = 30, message = "Type must be between 2 and 30 characters")
     private String type;
+
+    @NotNull(message = "Breed cannot be null")
+    @Size(min = 2, max = 30, message = "Breed must be between 2 and 30 characters")
     private String breed;
+
+    @NotNull(message = "Color cannot be null")
+    @Size(min = 2, max = 30, message = "Color must be between 2 and 30 characters")
     private String color;
+
+    @NotNull(message = "Age cannot be null")
     private int age;
+
+    @NotNull(message = "Weight cannot be null")
     private double weight;
+
+    @NotNull(message = "Description cannot be null")
+    @Size(min = 2, max = 255, message = "Description must be between 2 and 255 characters")
     private String description;
 
-    public Pet(int id, String name, String type, String breed, String color, String age, String weight,
-            String description) {
-        this.id = id;
-        this.name = name;
-        this.type = type;
-        this.breed = breed;
-        this.color = color;
-        this.age = Integer.parseInt(age);
-        this.weight = Double.parseDouble(weight);
-        this.description = description;
-    }
-
-    public int getPetId() {
-        return this.id;
-    }
-
-    public String getPetName() {
-        return this.name;
-    }
-
-    public String getPetType() {
-        return this.type;
-    }
-
-    public String getPetBreed() {
-        return this.breed;
-    }
-
-    public String getPetColor() {
-        return this.color;
-    }
-
-    public int getPetAge() {
-        return this.age;
-    }
-
-    public double getPetWeight() {
-        return this.weight;
-    }
-
-    public String getPetDescription() {
-        return this.description;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 }

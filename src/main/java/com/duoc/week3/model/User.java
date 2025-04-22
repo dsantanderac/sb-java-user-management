@@ -1,64 +1,69 @@
 package com.duoc.week3.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
-public class User {
-    public enum Role {
-        PET_OWNER,
-        PET_FRIENDLY_DRIVER
-    }
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-    private int id;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+
+@Entity
+@Table(name = "users")
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sq_user_id")
+    @SequenceGenerator(name = "sq_user_id", sequenceName = "sq_user_id", allocationSize = 1, initialValue = 1)
+    private Long id;
+
+    @NotNull(message = "Name cannot be null")
+    @Size(min = 2, max = 30, message = "Name must be between 2 and 30 characters")
     private String name;
+
+    @NotNull(message = "Email cannot be null")
+    @Size(min = 5, max = 50, message = "Email must be between 5 and 50 characters")
+    @Email(message = "Email should be valid")
+    @Column(unique = true)
     private String email;
+
+    @NotNull(message = "Password cannot be null")
+    @Size(min = 6, max = 12, message = "Password must be between 6 and 12 characters")
+    private String password;
+
+    @NotNull(message = "Phone cannot be null")
+    @Size(min = 10, max = 15, message = "Phone must be between 10 and 15 characters")
     private String phone;
-    private Role role;
-    private Date birthDate;
-    private Date created_at;
+
+    @NotNull(message = "Birth Date cannot be null")
+    private LocalDate birthDate;
+    private LocalDate created_at = LocalDate.now();
+    private LocalDate updated_at = LocalDate.now();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Pet> pets;
 
-    public User(int id, String name, String email, String phone, Role role, Date birthDate,
-            Date created_at, List<Pet> pets) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.phone = phone;
-        this.role = role;
-        this.birthDate = birthDate;
-        this.created_at = created_at;
-        this.pets = pets;
-    }
-
-    public int getUserId() {
-        return this.id;
-    }
-
-    public String getUserName() {
-        return this.name;
-    }
-
-    public String getUserEmail() {
-        return this.email;
-    }
-
-    public String getUserPhone() {
-        return this.phone;
-    }
-
-    public Role getUserRole() {
-        return this.role;
-    }
-
-    public Date getUserBirthDate() {
-        return this.birthDate;
-    }
-
-    public Date getUserCreatedAt() {
-        return this.created_at;
-    }
-
-    public List<Pet> getUserPets() {
-        return this.pets;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_id", nullable = false)
+    private Role role;
 }
