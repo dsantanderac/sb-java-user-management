@@ -8,4 +8,6 @@ import com.duoc.week3.model.User;
 // Repository layer for User
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+    // Custom query to find a user by email and password
+    User findByEmailAndPassword(String email, String password);
 }

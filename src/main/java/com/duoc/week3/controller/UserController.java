@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.duoc.week3.model.LoginRequest;
 import com.duoc.week3.model.User;
 import com.duoc.week3.service.UserService;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -77,5 +78,17 @@ public class UserController {
         userService.deleteUser(id);
         logger.info("User deleted successfully. User ID: {}", id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PostMapping("/auth/login")
+    public ResponseEntity<User> loginUser(@RequestBody LoginRequest user) {
+        logger.info("Logging in user with email: {}", user.getEmail());
+        User loggedInUser = userService.loginUser(user);
+        if (loggedInUser == null) {
+            logger.info("Login failed for email: {}", user.getEmail());
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        logger.info("User logged in successfully. User ID: {}", loggedInUser.getId());
+        return new ResponseEntity<>(loggedInUser, HttpStatus.OK);
     }
 }

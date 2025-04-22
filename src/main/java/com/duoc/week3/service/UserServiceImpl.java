@@ -6,9 +6,9 @@ import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.duoc.week3.model.LoginRequest;
 import com.duoc.week3.model.Role;
 import com.duoc.week3.model.User;
 import com.duoc.week3.repository.RoleRepository;
@@ -108,6 +108,32 @@ public class UserServiceImpl implements UserService {
             }
         } catch (Exception e) {
             logger.error("Delete user error - method deleteUser", e);
+            throw e;
+        }
+    }
+
+    // Override login user method with the business logic
+    @Override
+    public User loginUser(LoginRequest userRequest) {
+        String email = userRequest.getEmail();
+        String password = userRequest.getPassword();
+        if (email == null || password == null) {
+            logger.warn("Email or password is null - method loginUser");
+            return null;
+        }
+        logger.info("Login user with email: {} - method loginUser", email);
+        try {
+            User user = userRepository.findByEmailAndPassword(email, password);
+
+            if (user == null) {
+                logger.warn("Credentials are not valid: {} - method loginUser", email);
+                return null;
+            }
+
+            logger.info("User logged in successfully - method loginUser");
+            return user;
+        } catch (Exception e) {
+            logger.error("Login user error - method loginUser", e);
             throw e;
         }
     }
