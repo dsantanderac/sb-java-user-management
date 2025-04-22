@@ -1,9 +1,16 @@
 package com.duoc.week3.controller;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,18 +22,36 @@ import com.duoc.week3.service.UserService;
 public class UserController {
     // Dependency Injection
     private final UserService userService;
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
     @GetMapping
-    public List<User> getAllUsers() {
-        return userService.getAll();
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> users = userService.getAll();
+        logger.info("Retrieved {} users", users.size());
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable int id) {
-        return userService.getById(id);
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+        Optional<User> user = userService.getById(id);
+        return user.map(value -> {
+            logger.info("User found by ID: {}", id);
+            return new ResponseEntity<>(value, HttpStatus.OK);
+        }).orElseGet(() -> {
+            logger.info("User not found by ID: {}", id);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        });
+    }
+
+    @PostMapping()
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+        logger.info("Creating a new user with request: {}", user);
+        User savedUser = userService.saveUser(user);
+        logger.info("User created successfully. User ID: {}", savedUser.getId());
+        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
 }

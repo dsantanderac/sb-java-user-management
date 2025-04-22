@@ -10,8 +10,4 @@ import com.duoc.week3.model.User;
 // Repository layer for User
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    // Retrieve all users
-    List<User> findAll();
-
-    User findById(int id);
 }
