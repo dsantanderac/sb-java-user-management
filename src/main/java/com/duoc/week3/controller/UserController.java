@@ -1,6 +1,5 @@
 package com.duoc.week3.controller;
 
-import java.lang.StackWalker.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -69,5 +69,13 @@ public class UserController {
         }
         logger.info("User updated successfully. User ID: {}", updatedUser.getId());
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+        logger.info("Deleting user with ID: {}", id);
+        userService.deleteUser(id);
+        logger.info("User deleted successfully. User ID: {}", id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

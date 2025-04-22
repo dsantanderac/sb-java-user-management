@@ -92,4 +92,23 @@ public class UserServiceImpl implements UserService {
             throw e;
         }
     }
+
+    // Override delete user method with the business logic
+    @Override
+    public void deleteUser(Long id) {
+        logger.info("Delete user with ID: {} - method deleteUser", id);
+        try {
+            Optional<User> existingUserOpt = userRepository.findById(id);
+
+            if (existingUserOpt.isPresent()) {
+                userRepository.delete(existingUserOpt.get());
+                logger.info("User with ID: {} deleted - method deleteUser", id);
+            } else {
+                logger.warn("User with ID: {} not found - method deleteUser", id);
+            }
+        } catch (Exception e) {
+            logger.error("Delete user error - method deleteUser", e);
+            throw e;
+        }
+    }
 }
