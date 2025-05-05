@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.duoc.week3.repository.UserRepositoryTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.009 s -- in com.duoc.week3.repository.UserRepositoryTest

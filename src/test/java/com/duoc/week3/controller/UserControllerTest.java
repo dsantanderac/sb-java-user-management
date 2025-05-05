@@ -2,6 +2,8 @@ package com.duoc.week3.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 import java.time.LocalDate;
@@ -15,6 +17,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -55,11 +59,15 @@ public class UserControllerTest {
         when(userService.getAll()).thenReturn(List.of(user));
 
         // Act
-        ResponseEntity<List<User>> response = userController.getAllUsers();
+        ResponseEntity<CollectionModel<EntityModel<User>>> response = userController.getAllUsers();
+        CollectionModel<EntityModel<User>> foundUsersModel = response.getBody();
 
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(1, response.getBody().size());
+        assertEquals(1, foundUsersModel.getContent().size());
+        assertNotNull(foundUsersModel);
+        assertTrue(foundUsersModel.hasLink("self"));
+        verify(userService).getAll();
     }
 
     @Test
@@ -69,11 +77,15 @@ public class UserControllerTest {
         when(userService.getById(userId)).thenReturn(Optional.of(user));
 
         // Act
-        ResponseEntity<User> response = userController.getUserById(userId);
+        ResponseEntity<EntityModel<User>> response = userController.getUserById(userId);
+        EntityModel<User> foundUserModel = response.getBody();
 
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(user, response.getBody());
+        assertNotNull(foundUserModel);
+        assertEquals(user.getId(), foundUserModel.getContent().getId());
+        assertTrue(foundUserModel.hasLink("self"));
+        verify(userService).getById(1L);
     }
 
     @Test
@@ -82,12 +94,15 @@ public class UserControllerTest {
         when(userService.saveUser(user)).thenReturn(user);
 
         // Act
-        ResponseEntity<User> response = userController.createUser(user);
+        ResponseEntity<EntityModel<User>> response = userController.createUser(user);
+        EntityModel<User> savedUserModel = response.getBody();
 
         // Assert
-        assertNotNull(response.getBody());
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals(user, response.getBody());
+        assertNotNull(savedUserModel);
+        assertEquals(user.getId(), savedUserModel.getContent().getId());
+        assertTrue(savedUserModel.hasLink("self"));
+        verify(userService).saveUser(any(User.class));
     }
 
     @Test
@@ -97,11 +112,15 @@ public class UserControllerTest {
         when(userService.updateUser(userId, user)).thenReturn(user);
 
         // Act
-        ResponseEntity<User> response = userController.updateUser(userId, user);
+        ResponseEntity<EntityModel<User>> response = userController.updateUser(userId, user);
+        EntityModel<User> updatedUserModel = response.getBody();
 
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(user, response.getBody());
+        assertNotNull(updatedUserModel);
+        assertEquals(user.getId(), updatedUserModel.getContent().getId());
+        assertTrue(updatedUserModel.hasLink("self"));
+
     }
 
     @Test

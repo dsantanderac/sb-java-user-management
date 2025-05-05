@@ -8,7 +8,9 @@ com/duoc/week3/repository/UserRepository.class
 com/duoc/week3/repository/PetRepository.class
 com/duoc/week3/controller/UserController.class
 com/duoc/week3/Week3Application.class
+com/duoc/week3/model/User$UserBuilder.class
 com/duoc/week3/service/UserService.class
 com/duoc/week3/service/UserServiceImpl.class
 com/duoc/week3/model/LoginRequest.class
 com/duoc/week3/model/Role.class
+com/duoc/week3/model/Role$RoleBuilder.class
