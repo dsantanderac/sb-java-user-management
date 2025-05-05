@@ -12,12 +12,14 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Builder
 // This annotation is used to ignore properties that are not needed for
 // serialization/deserialization
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
