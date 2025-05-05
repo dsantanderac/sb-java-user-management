@@ -1,0 +1,14 @@
+/Users/x0dsanta/Developer/Duoc/Fullstack_1/Week_3/week3/src/main/java/com/duoc/week3/Week3Application.java
+/Users/x0dsanta/Developer/Duoc/Fullstack_1/Week_3/week3/src/main/java/com/duoc/week3/controller/PetController.java
+/Users/x0dsanta/Developer/Duoc/Fullstack_1/Week_3/week3/src/main/java/com/duoc/week3/controller/UserController.java
+/Users/x0dsanta/Developer/Duoc/Fullstack_1/Week_3/week3/src/main/java/com/duoc/week3/model/LoginRequest.java
+/Users/x0dsanta/Developer/Duoc/Fullstack_1/Week_3/week3/src/main/java/com/duoc/week3/model/Pet.java
+/Users/x0dsanta/Developer/Duoc/Fullstack_1/Week_3/week3/src/main/java/com/duoc/week3/model/Role.java
+/Users/x0dsanta/Developer/Duoc/Fullstack_1/Week_3/week3/src/main/java/com/duoc/week3/model/User.java
+/Users/x0dsanta/Developer/Duoc/Fullstack_1/Week_3/week3/src/main/java/com/duoc/week3/repository/PetRepository.java
+/Users/x0dsanta/Developer/Duoc/Fullstack_1/Week_3/week3/src/main/java/com/duoc/week3/repository/RoleRepository.java
+/Users/x0dsanta/Developer/Duoc/Fullstack_1/Week_3/week3/src/main/java/com/duoc/week3/repository/UserRepository.java
+/Users/x0dsanta/Developer/Duoc/Fullstack_1/Week_3/week3/src/main/java/com/duoc/week3/service/PetService.java
+/Users/x0dsanta/Developer/Duoc/Fullstack_1/Week_3/week3/src/main/java/com/duoc/week3/service/PetServiceImpl.java
+/Users/x0dsanta/Developer/Duoc/Fullstack_1/Week_3/week3/src/main/java/com/duoc/week3/service/UserService.java
+/Users/x0dsanta/Developer/Duoc/Fullstack_1/Week_3/week3/src/main/java/com/duoc/week3/service/UserServiceImpl.java
